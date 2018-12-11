@@ -1,0 +1,96 @@
+<mat-card>
+  <dg-heading level="headline">СЛУЖБА АВТОМОБІЛЬНИХ ДОРІГ У ЧЕРНІГІВСЬКІЙ ОБЛАСТІ</dg-heading>
+</mat-card>
+
+<mat-card>
+  Всього виконано робіт: {{ calcTotalProgress(contracts$ | async) | percent }}
+  <mat-progress-bar color="primary" value="{{ calcTotalProgress(contracts$ | async) * 100 }}"></mat-progress-bar>
+</mat-card>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let contract of contracts$ | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Документ №{{ contract.documentNumber }} від {{ contract.fromDate | date : 'shortDate' : 'UTC' }}</mat-panel-title>
+
+      <mat-panel-description>
+        <mat-progress-bar color="primary" value="{{ calcPaidAmount(contract) / contract.amount * 100 }}"></mat-progress-bar>
+        <span class="progress-percentage">{{ calcPaidAmount(contract) / contract.amount | percent }}</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <dg-grid class="mat-small">
+      <dg-grid-cell column-span="3">Предмет договору</dg-grid-cell>
+      <dg-grid-cell column-span="9">{{ contract.subject }}</dg-grid-cell>
+
+      <dg-grid-cell column-span="3">Строк дії договору</dg-grid-cell>
+      <dg-grid-cell column-span="9">{{ contract.fromDate | date : 'shortDate' : 'UTC' }} - {{ contract.toDate | date : 'shortDate' : 'UTC' }}</dg-grid-cell>
+
+      <dg-grid-cell column-span="3">Вартість договору</dg-grid-cell>
+      <dg-grid-cell column-span="9">{{ contract.amount | currency : contract.currency }}</dg-grid-cell>
+
+      <dg-grid-cell column-span="3">Актів на суму</dg-grid-cell>
+      <dg-grid-cell column-span="9">{{ calcPaidAmount(contract) | currency : contract.currency }}</dg-grid-cell>
+
+      <dg-grid-cell column-span="12">
+        <dg-column>
+          <dg-heading level="title">Графік виконання</dg-heading>
+          <app-line-chart [data]="calcProgress(contract)"></app-line-chart>
+        </dg-column>
+      </dg-grid-cell>
+
+      <dg-grid-cell column-span="12">
+        <dg-column>
+          <dg-heading level="title">
+            Акти <span class="mat-small">(всього актів: {{ contract.acts.length }})</span>
+          </dg-heading>
+
+          <table mat-table [dataSource]="contract.acts">
+            <ng-container matColumnDef="number">
+              <th mat-header-cell *matHeaderCellDef>Номер</th>
+              <td mat-cell *matCellDef="let act">{{ act.documentNumber }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Від</th>
+              <td mat-cell *matCellDef="let act">{{ act.documentDate | date : 'shortDate' : 'UTC' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Вартість за актом</th>
+              <td mat-cell *matCellDef="let act">{{ act.amount | currency : contract.currency }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['number', 'date', 'amount']"></tr>
+            <tr mat-row *matRowDef="let act; columns: ['number', 'date', 'amount']"></tr>
+          </table>
+        </dg-column>
+      </dg-grid-cell>
+
+      <dg-grid-cell column-span="12">
+        <dg-column>
+          <dg-heading level="title">Контрагенти</dg-heading>
+
+          <table mat-table [dataSource]="contract.contractors">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Назва</th>
+              <td mat-cell *matCellDef="let contractor">{{ contractor.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+              <th mat-header-cell *matHeaderCellDef>Адреса</th>
+              <td mat-cell *matCellDef="let contractor">{{ contractor.address.city }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ceo">
+              <th mat-header-cell *matHeaderCellDef>Керівник</th>
+              <td mat-cell *matCellDef="let contractor">{{ contractor.lastName }} {{ contractor.firstName }} {{ contractor.middleName }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'address', 'ceo']"></tr>
+            <tr mat-row *matRowDef="let contractor; columns: ['name', 'address', 'ceo']"></tr>
+          </table>
+        </dg-column>
+      </dg-grid-cell>
+    </dg-grid>
+  </mat-expansion-panel>
+</mat-accordion>

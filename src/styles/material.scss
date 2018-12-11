@@ -1,0 +1,11 @@
+@import '~@datagazer/ui';
+
+// Core
+@include mat-core($typography);
+@include mat-core-theme($theme);
+
+// Components
+@include mat-card-theme($theme);
+@include mat-expansion-panel-theme($theme);
+@include mat-progress-bar-theme($theme);
+@include mat-table-theme($theme);

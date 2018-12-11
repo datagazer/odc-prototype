@@ -1,0 +1,53 @@
+@import '~@datagazer/ui';
+
+:host {
+  @include dg-column();
+}
+
+.mat-card {
+  padding: map-get($default-gutter, large);
+}
+
+.mat-expansion-panel-header-title {
+  flex: 0 0 30%;
+}
+
+.mat-expansion-panel-header-description {
+  flex: 0 0 70%;
+
+  align: {
+    items: center;
+  }
+
+  .mat-progress-bar {
+    flex: 0 0 30%;
+  }
+
+  .progress-percentage {
+    flex: 0 0 10%;
+
+    margin: {
+      left: map-get($default-gutter, large);
+    }
+
+    @include mat-typography-level-to-styles($typography, caption);
+  }
+}
+
+.mat-table {
+  width: calc(#{(map-get($default-gutter, large) * 2)} + 100%);
+
+  margin: 0 (map-get($default-gutter, large) * -1);
+}
+
+.mat-cell, .mat-header-cell {
+  padding: map-get($default-gutter, small);
+}
+
+.mat-column {
+  &-amount {
+    text: {
+      align: right;
+    }
+  }
+}

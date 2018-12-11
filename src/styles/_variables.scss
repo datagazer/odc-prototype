@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+
+$theme: mat-light-theme(
+  mat-palette($mat-blue),
+  mat-palette($mat-blue),
+  mat-palette($mat-red)
+);
+
+$typography: mat-typography-config(
+  $display-4: mat-typography-level(96px, 1, 300),
+  $display-3: mat-typography-level(60px, 1, 300),
+  $display-2: mat-typography-level(48px, 1, 400),
+  $display-1: mat-typography-level(34px, 1, 400),
+  $headline: mat-typography-level(24px, 1, 400),
+  $title: mat-typography-level(20px, 1, 500)
+);
+
+$min-layout-width: 768px;
+$max-layout-width: 1024px;

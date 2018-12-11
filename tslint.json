@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "./node_modules/@datagazer/toolkit/tslint/tslint.modules.json"
+  ]
+}

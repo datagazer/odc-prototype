@@ -1,0 +1,93 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+
+  "version": 1,
+
+  "projects": {
+    "odc": {
+      "root": "",
+      "sourceRoot": "./src",
+      "projectType": "application",
+      "prefix": "app",
+
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+
+          "options": {
+            "tsConfig": "./src/tsconfig.app.json",
+
+            "main": "./src/main.ts",
+            "polyfills": "./src/polyfills.ts",
+
+            "index": "./src/index.html",
+
+            "assets": [
+              { "glob": "./assets/**/*", "input": "./src", "output": "." }
+            ],
+
+            "styles": [
+              "./src/styles/reset.scss",
+              "./src/styles/material.scss"
+            ],
+
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/styles"
+              ]
+            },
+
+            "outputPath": "./dist",
+
+            "extractCss": true,
+            "extractLicenses": false,
+
+            "preserveSymlinks": true
+          },
+
+          "configurations": {
+            "development": {
+              "aot": true
+            },
+
+            "production": {
+              "aot": true,
+
+              "fileReplacements": [
+                {
+                  "replace": "./demo/environments/environment.ts",
+                  "with": "./demo/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+
+          "options": {
+            "browserTarget": "odc:build:development",
+            "proxyConfig": "./proxy.conf.js",
+            "host": "0.0.0.0",
+            "port": 80
+          }
+        },
+
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+
+          "options": {
+            "tsConfig": [
+              "./src/tsconfig.app.json"
+            ],
+
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

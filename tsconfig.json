@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+
+    "module": "esnext",
+    "moduleResolution": "node",
+
+    "experimentalDecorators": true,
+
+    "plugins": [
+      { "name": "@angular/language-service" }
+    ],
+
+    "lib": [
+      "dom",
+      "esnext"
+    ]
+  }
+}

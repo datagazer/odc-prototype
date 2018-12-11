@@ -1,0 +1,15 @@
+@import '~@datagazer/ui';
+
+:host {
+  display: block;
+
+  padding: map-get($default-gutter, large) 0;
+
+  background: {
+    color: mat-color(map-get($theme, primary), default);
+  }
+
+  color: mat-color(map-get($theme, primary), default-contrast);
+
+  @include mat-elevation(6);
+}

@@ -1,0 +1,31 @@
+@import '~@datagazer/ui';
+
+:host {
+  display: grid;
+
+  grid: {
+    template: {
+      rows: auto 1fr;
+    }
+
+    gap: map-get($default-gutter, large);
+  }
+
+  height: 100vh;
+
+  @include mat-typography-level-to-styles($typography, body-1);
+
+  background: {
+    color: mat-color(map-get($theme, background), background);
+  }
+
+  color: mat-color(map-get($theme, foreground), text);
+}
+
+main {
+  @include dg-container();
+
+  padding: {
+    bottom: map-get($default-gutter, large);
+  }
+}
