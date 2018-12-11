@@ -67,10 +67,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
 
           "options": {
-            "browserTarget": "odc:build:development",
-            "proxyConfig": "./proxy.conf.js",
-            "host": "0.0.0.0",
-            "port": 80
+            "browserTarget": "odc:build:development"
           }
         },
 
